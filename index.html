@@ -737,8 +737,8 @@ const observer = new IntersectionObserver(entries => {
       // trigger counters
       e.target.querySelectorAll('[data-target]').forEach(el => animateCounter(el));
       // trigger bars
-      if (e.target.querySelector('#bar-chart') || e.target.closest('.grid-section')) {
-        triggerBars();
+      //if (e.target.querySelector('#bar-chart') || e.target.closest('.grid-section')) {
+      // triggerBars();
       }
       if (e.target.closest('.mono-section') || e.target.querySelector('#mono-methods')) {
         triggerMono();
