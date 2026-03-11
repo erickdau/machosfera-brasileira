@@ -278,75 +278,7 @@
   .channel-dot.renamed  { background: var(--amber); }
   .channel-dot.removed  { background: #333; border: 1px solid #444; }
 
-  /* ── GROWTH CHART ── */
-  .chart-wrap {
-    margin-top: 64px;
-    position: relative;
-  }
 
-  .chart-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    margin-bottom: 8px;
-  }
-
-  .chart-subtitle {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--text-dim);
-    margin-bottom: 40px;
-    letter-spacing: 1px;
-  }
-
-  #bar-chart {
-    display: flex;
-    align-items: flex-end;
-    gap: 6px;
-    height: 220px;
-  }
-
-  .bar-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-    height: 100%;
-    justify-content: flex-end;
-  }
-
-  .bar-fill {
-    width: 100%;
-    border-radius: 3px 3px 0 0;
-    position: relative;
-    transition: height 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-    cursor: pointer;
-  }
-
-  .bar-fill:hover::after {
-    content: attr(data-val);
-    position: absolute;
-    top: -32px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--surface2);
-    border: 1px solid #333;
-    padding: 4px 10px;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    white-space: nowrap;
-    border-radius: 4px;
-    color: var(--text);
-  }
-
-  .bar-label {
-    margin-top: 8px;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.5px;
-    color: var(--text-dim);
-    text-align: center;
-    line-height: 1.4;
-  }
 
   /* ── THEMES PIE ── */
   .themes-section {
@@ -620,7 +552,7 @@
   <h2 class="section-title">Uma rede que cresce com impunidade</h2>
   <div class="divider"></div>
   <p class="section-body">
-    Em 2024, o NetLab UFRJ mapeou<strong>137 canais brasileiros no YouTube</strong> que veiculavam conteúdo com discurso de ódio, desprezo e controle sobre mulheres. Dois anos depois, o retrato é perturbador: <strong>90% seguem ativos</strong>. E não apenas sobrevivendo — crescendo.
+    Em 2024, pesquisadores do NetLab mapearam <strong>137 canais brasileiros no YouTube</strong> que veiculavam conteúdo com discurso de ódio, desprezo e controle sobre mulheres. Dois anos depois, o retrato é perturbador: <strong>90% seguem ativos</strong>. E não apenas sobrevivendo — crescendo.
   </p>
   <br>
   <p class="section-body">
@@ -674,8 +606,7 @@
     <div id="channel-grid"></div>
   </div>
 
-  <!-- Bar chart: growth -->
-  
+</div>
 
 <!-- ── THEMES ── -->
 <div class="themes-section reveal">
@@ -736,10 +667,6 @@ const observer = new IntersectionObserver(entries => {
       e.target.classList.add('visible');
       // trigger counters
       e.target.querySelectorAll('[data-target]').forEach(el => animateCounter(el));
-      // trigger bars
-      //if (e.target.querySelector('#bar-chart') || e.target.closest('.grid-section')) {
-      // triggerBars();
-      }
       if (e.target.closest('.mono-section') || e.target.querySelector('#mono-methods')) {
         triggerMono();
       }
@@ -803,45 +730,7 @@ channels.forEach(ch => {
   grid.appendChild(dot);
 });
 
-// ── BAR CHART ──
-const bars = [
-  { label: 'Antes\nde 2021', val: 0.8,  color: '#3a3a3a' },
-  { label: '2021',          val: 2.1,  color: '#6a2030' },
-  { label: '2022',          val: 3.8,  color: '#8a2535' },
-  { label: '2023',          val: 6.4,  color: '#b02a3a' },
-  { label: 'Jan–Abr\n2024', val: 5.2,  color: '#d03040' },
-  { label: 'Mai 2024–\nMar 2026', val: 4.7, color: '#e63946' },
-];
 
-const maxVal = Math.max(...bars.map(b => b.val));
-const chartEl = document.getElementById('bar-chart');
-bars.forEach(b => {
-  const group = document.createElement('div');
-  group.className = 'bar-group';
-  const fill = document.createElement('div');
-  fill.className = 'bar-fill';
-  fill.style.background = b.color;
-  fill.style.height = '0px';
-  fill.dataset.height = Math.round((b.val / maxVal) * 200);
-  fill.dataset.val = b.val + 'M inscritos';
-  const label = document.createElement('div');
-  label.className = 'bar-label';
-  label.textContent = b.label;
-  group.appendChild(fill);
-  group.appendChild(label);
-  chartEl.appendChild(group);
-});
-
-let barsTriggered = false;
-function triggerBars() {
-  if (barsTriggered) return;
-  barsTriggered = true;
-  document.querySelectorAll('.bar-fill').forEach((el, i) => {
-    setTimeout(() => {
-      el.style.height = el.dataset.height + 'px';
-    }, i * 80);
-  });
-}
 
 // ── DONUT CHART ──
 const themes = [
